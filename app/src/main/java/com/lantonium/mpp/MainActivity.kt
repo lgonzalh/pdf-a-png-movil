@@ -108,10 +108,10 @@ class MainActivity : ComponentActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.lantonium_logo_black),
-                        contentDescription = "Lantonium",
+                        painter = painterResource(R.drawable.pdf2png),
+                        contentDescription = "PDF a PNG",
                         modifier = Modifier
-                            .height(56.dp)
+                            .size(72.dp)
                             .padding(bottom = 4.dp)
                     )
                     Text(
