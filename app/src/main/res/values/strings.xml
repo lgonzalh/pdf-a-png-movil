@@ -2,10 +2,13 @@
 <resources>
     <string name="app_name">PDF a PNG Móvil</string>
     <string name="main_title">PDF a PNG Móvil</string>
-    <string name="app_version">Ver 1.0 build alpha</string>
+    <string name="app_version">Ver 1.0 build beta</string>
     <string name="main_subtitle">Convierte tus PDF en imágenes PNG y compártelas por WhatsApp</string>
     <string name="pick_pdf">Seleccionar PDF</string>
     <string name="pick_pdf_hint">Elige un PDF descargado en tu carpeta de Descargas</string>
+    <string name="page_count">Páginas: %1$d</string>
+    <string name="preview_title">Vista previa</string>
+    <string name="preview_generating">Generando vista previa…</string>
     <string name="convert_send">Convertir y enviar por WhatsApp</string>
     <string name="about_screen">Acerca de esta App…</string>
     <string name="quality">Calidad de imagen</string>

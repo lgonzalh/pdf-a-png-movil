@@ -3,6 +3,7 @@ package com.lantonium.mpp
 import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -14,6 +15,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,7 +27,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -60,6 +65,9 @@ class MainActivity : ComponentActivity() {
             val context = this
             var selectedUri by remember { mutableStateOf<Uri?>(null) }
             var fileName by remember { mutableStateOf<String?>(null) }
+            var pageCount by remember { mutableStateOf<Int?>(null) }
+            var previews by remember { mutableStateOf<List<Bitmap>>(emptyList()) }
+            var previewing by remember { mutableStateOf(false) }
             var converting by remember { mutableStateOf(false) }
             var status by remember { mutableStateOf("") }
             var askDelete by remember { mutableStateOf(false) }
@@ -72,6 +80,14 @@ class MainActivity : ComponentActivity() {
                     selectedUri = uri
                     fileName = queryName(uri)
                     status = ""
+                    pageCount = null
+                    previews = emptyList()
+                    previewing = true
+                    scope.launch {
+                        pageCount = runCatching { PdfConverter.pageCount(context, uri) }.getOrNull()
+                        previews = runCatching { PdfConverter.renderPreview(context, uri) }.getOrDefault(emptyList())
+                        previewing = false
+                    }
                 }
             }
 
@@ -124,7 +140,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         Column(modifier = Modifier.padding(18.dp)) {
                             Text(
-                                text = "1. " + stringResource(R.string.pick_pdf),
+                                text = stringResource(R.string.pick_pdf),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
@@ -143,6 +159,50 @@ class MainActivity : ComponentActivity() {
                                 Icon(painterResource(R.drawable.ic_pdf), contentDescription = null)
                                 Spacer(Modifier.width(8.dp))
                                 Text(fileName?.let { it } ?: stringResource(R.string.pick_pdf))
+                            }
+                            pageCount?.let { count ->
+                                Spacer(Modifier.height(10.dp))
+                                Text(
+                                    text = stringResource(R.string.page_count, count),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    color = Color(0xFF128C7E),
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                        }
+                    }
+
+                    if (previewing) {
+                        Spacer(Modifier.height(16.dp))
+                        Text(
+                            text = stringResource(R.string.preview_generating),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color(0xFF5B6472)
+                        )
+                    } else if (previews.isNotEmpty()) {
+                        Spacer(Modifier.height(16.dp))
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(18.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color.White)
+                        ) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(
+                                    text = stringResource(R.string.preview_title),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                                Spacer(Modifier.height(10.dp))
+                                LazyRow(
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                ) {
+                                    items(previews.size) { i ->
+                                        PreviewThumb(
+                                            bitmap = previews[i],
+                                            label = "${i + 1}"
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
@@ -267,6 +327,27 @@ class MainActivity : ComponentActivity() {
                     }
                 )
             }
+        }
+    }
+
+    @Composable
+    private fun PreviewThumb(bitmap: Bitmap, label: String) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Image(
+                bitmap = bitmap.asImageBitmap(),
+                contentDescription = null,
+                contentScale = ContentScale.Fit,
+                modifier = Modifier
+                    .width(86.dp)
+                    .height(120.dp)
+                    .clip(RoundedCornerShape(10.dp))
+            )
+            Spacer(Modifier.height(4.dp))
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelSmall,
+                color = Color(0xFF6B7280)
+            )
         }
     }
 

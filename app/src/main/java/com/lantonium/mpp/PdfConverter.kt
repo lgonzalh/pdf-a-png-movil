@@ -18,7 +18,55 @@ object PdfConverter {
     }
 
 fun outputDir(context: Context): File =
-    File(context.filesDir, "pdf2png").apply { mkdirs() }
+        File(context.filesDir, "pdf2png").apply { mkdirs() }
+
+    suspend fun pageCount(context: Context, uri: Uri): Int = withContext(Dispatchers.IO) {
+        try {
+            val pfd = context.contentResolver.openFileDescriptor(uri, "r") ?: return@withContext 0
+            try {
+                PdfRenderer(pfd).use { it.pageCount }
+            } finally {
+                pfd.close()
+            }
+        } catch (t: Throwable) {
+            0
+        }
+    }
+
+    suspend fun renderPreview(
+        context: Context,
+        uri: Uri,
+        maxPages: Int = 40,
+        thumbWidth: Int = 300
+    ): List<Bitmap> = withContext(Dispatchers.IO) {
+        try {
+            val pfd = context.contentResolver.openFileDescriptor(uri, "r") ?: return@withContext emptyList()
+            try {
+                PdfRenderer(pfd).use { renderer ->
+                    val bitmaps = mutableListOf<Bitmap>()
+                    val pages = minOf(renderer.pageCount, maxPages)
+                    for (i in 0 until pages) {
+                        val page = renderer.openPage(i)
+                        try {
+                            val width = thumbWidth
+                            val height = (page.height * thumbWidth / page.width.toFloat()).toInt()
+                            val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                            bmp.eraseColor(Color.WHITE)
+                            page.render(bmp, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+                            bitmaps += bmp
+                        } finally {
+                            page.close()
+                        }
+                    }
+                    bitmaps
+                }
+            } finally {
+                pfd.close()
+            }
+        } catch (t: Throwable) {
+            emptyList()
+        }
+    }
 
     suspend fun renderPdfPages(context: Context, uri: Uri, quality: Quality): List<File> =
         withContext(Dispatchers.IO) {

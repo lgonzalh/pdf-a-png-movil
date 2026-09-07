@@ -2,9 +2,13 @@
 
 App movil nativa en **Kotlin** para Android (12+) que convierte un PDF en imagenes PNG de alta calidad y te permite compartirlas directamente por **WhatsApp** o **WhatsApp Business**, en un solo paso.
 
+> Version actual: **Ver 1.0 build beta**
+
 ## Caracteristicas
 
 - Seleccion de cualquier PDF descargado en tu carpeta de Descargas (o desde tu almacenamiento) sin permisos especiales.
+- **Conteo de paginas** al cargar el PDF, para saber cuantas imagenes se generaran.
+- **Vista previa** de las paginas del PDF (miniatura desplazable) antes de convertir.
 - Conversion automatica de **todas las paginas** del PDF (incluso si es una sola pagina) a PNG de alta calidad y peso liviano.
 - Boton **"Convertir y enviar por WhatsApp"**: convierte y abre WhatsApp con todas las imagenes listas para adjuntar.
 - Limpieza automatica: despues de confirmar el envio, las imagenes temporales se eliminan y tu **PDF original se conserva**.
@@ -28,9 +32,10 @@ App movil nativa en **Kotlin** para Android (12+) que convierte un PDF en imagen
 ## Como usar
 
 1. Toca **"Seleccionar PDF"** y elige un PDF descargado.
-2. Toca el boton verde **"Convertir y enviar por WhatsApp"**.
-3. En WhatsApp se adjuntan todas las paginas como imagenes PNG; elige el chat y envia.
-4. Al volver a la app, confirma el envio y las imagenes temporales se eliminan automaticamente, conservando el PDF original.
+2. Veras la cantidad de paginas y una **vista previa** en miniatura de cada una.
+3. Toca el boton verde **"Convertir y enviar por WhatsApp"**.
+4. En WhatsApp se adjuntan todas las paginas como imagenes PNG; elige el chat y envia.
+5. Al volver a la app, confirma el envio y las imagenes temporales se eliminan automaticamente, conservando el PDF original.
 
 ## Compilar desde el codigo fuente
 
