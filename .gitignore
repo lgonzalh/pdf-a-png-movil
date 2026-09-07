@@ -8,3 +8,4 @@ local.properties
 bin/
 keystore/
 assets/*.pdf
+/*.png
