@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="wa_dark">#075E54</color>
+    <color name="wa_teal">#128C7E</color>
+    <color name="wa_light">#25D366</color>
+    <color name="cream">#F7F3E9</color>
+    <color name="ink">#1F2937</color>
+    <color name="brand_logo">#00BFA5</color>
+</resources>
