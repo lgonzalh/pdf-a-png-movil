@@ -111,7 +111,7 @@ class MainActivity : ComponentActivity() {
                         painter = painterResource(R.drawable.pdf2png),
                         contentDescription = "PDF a PNG",
                         modifier = Modifier
-                            .size(72.dp)
+                            .size(100.dp)
                             .padding(bottom = 4.dp)
                     )
                     Text(

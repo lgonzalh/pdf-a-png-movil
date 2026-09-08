@@ -237,7 +237,7 @@ class AboutActivity : ComponentActivity() {
                 modifier = Modifier.size(56.dp),
                 shape = RoundedCornerShape(16.dp),
                 contentPadding = PaddingValues(10.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF075E54))
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF3F4F6))
             ) {
                 Image(
                     painter = painterResource(drawableRes),
