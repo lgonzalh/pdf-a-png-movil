@@ -1,5 +1,10 @@
 # PDF a PNG Movil
 
+<img width="417" height="956" alt="Captura de pantalla 2026-09-07 195538" src="https://github.com/user-attachments/assets/31076534-cd4a-4ee4-a204-e31f380aafd4" />
+<img width="417" height="956" alt="Captura de pantalla 2026-09-07 195718" src="https://github.com/user-attachments/assets/dac92f59-4bfa-495a-9053-46e56f0953bc" />
+<img width="417" height="956" alt="Captura de pantalla 2026-09-07 195941" src="https://github.com/user-attachments/assets/d79d3523-4196-4d13-8d59-bb63b3fe4dc1" />
+<img width="417" height="956" alt="Captura de pantalla 2026-09-07 195946" src="https://github.com/user-attachments/assets/a14f8152-c35b-450b-a3e5-42129ec7c66a" />
+
 App movil nativa en **Kotlin** para Android (12+) que convierte un PDF en imagenes PNG de alta calidad y te permite compartirlas directamente por **WhatsApp** o **WhatsApp Business**, en un solo paso.
 
 > Version actual: **Ver 1.0 build beta**
