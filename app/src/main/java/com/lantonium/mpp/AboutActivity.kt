@@ -205,8 +205,9 @@ class AboutActivity : ComponentActivity() {
                             }
                             Spacer(Modifier.height(10.dp))
                             Text(
-                                text = "¿Hablamos sobre un proyecto? Escribe a lgonzalh@outlook.com o conéctate por " +
-                                        "cualquier red social.",
+text = "Si quieres conversar sobre un proyecto, una oportunidad laboral o simplemente " +
+                                    "intercambiar ideas sobre ingeniería de software, puedes escribirme a lgonzalh@outlook.com " +
+                                    "o conectarte conmigo en LinkedIn o GitHub o por WhatsApp.",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = Color(0xFF5B6472),
                                 textAlign = TextAlign.Center
